@@ -26,7 +26,12 @@ jobs:
     - name: Make Directory for results
       run: mkdir -p testResults
 
-
+    - run: docker-compose up -d
+    
+    - name: Sleep for 60 seconds
+      run: sleep 90s
+      shell: bash
+      
     # Run the POSTMAN collection
     - name: Run POSTMAN collection
       run: |
