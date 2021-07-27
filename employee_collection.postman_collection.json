@@ -1,0 +1,492 @@
+{
+	"info": {
+		"_postman_id": "d7fa98dc-5f91-4f9a-a46f-8a5939bad3e6",
+		"name": "employee collection",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+	},
+	"item": [
+		{
+			"name": "Employee App",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "{{url}}",
+					"host": [
+						"{{url}}"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Jobdescription",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"var jsonData = pm.response.json();\r",
+							"pm.environment.set(\"job_description_id\", jsonData.id);\r",
+							"\r",
+							"pm.test(\"Title test\", function () {\r",
+							"    var jsonData = pm.response.json();\r",
+							"    pm.expect(jsonData.title).to.eql(\"Automata Tesztelő\");\r",
+							"});\r",
+							"\r",
+							"pm.test(\"Description test\", function () {\r",
+							"    var jsonData = pm.response.json();\r",
+							"    pm.expect(jsonData.description).to.eql(\"Teszteli a tesztelendőket\");\r",
+							"});\r",
+							"\r",
+							"pm.test(\"Added at test\", function () {\r",
+							"    var jsonData = pm.response.json();\r",
+							"    pm.expect(jsonData.addedAt).to.eql(\"2021-07-27T09:20:37.943\");\r",
+							"});"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n  \"title\": \"Automata Tesztelő\",\r\n  \"description\": \"Teszteli a tesztelendőket\",\r\n  \"addedAt\": \"2021-07-27T09:20:37.943Z\"\r\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "{{jobdescriptions_url}}",
+					"host": [
+						"{{jobdescriptions_url}}"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Jobdescription",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"pm.test(\"Mod title test\", function () {\r",
+							"    var jsonData = pm.response.json();\r",
+							"    pm.expect(jsonData.title).to.eql(\"Automata tesztelőke\");\r",
+							"});\r",
+							"\r",
+							"pm.test(\"Mod Added at test\", function () {\r",
+							"    var jsonData = pm.response.json();\r",
+							"    pm.expect(jsonData.addedAt).to.eql(\"2021-07-27T12:20:37.943\");\r",
+							"});"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "PUT",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n  \"title\": \"Automata tesztelőke\",\r\n  \"description\": \"Teszteli a tesztelendőket\",\r\n  \"addedAt\": \"2021-07-27T12:20:37.943Z\"\r\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "{{jobdescriptions_url}}/{{job_description_id}}",
+					"host": [
+						"{{jobdescriptions_url}}"
+					],
+					"path": [
+						"{{job_description_id}}"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Jobdescriptions",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"var template = `\r",
+							"    <table bgcolor=\"#FFFFFF\">\r",
+							"        <tr>\r",
+							"            <th>Title</th>\r",
+							"            <th>Description</th>\r",
+							"            <th>Added at</th>\r",
+							"            <th>ID</th>\r",
+							"        </tr>\r",
+							"\r",
+							"        {{#each response}}\r",
+							"            <tr>\r",
+							"                <td>{{title}}</td>\r",
+							"                <td>{{description}}</td>\r",
+							"                <td>{{addedAt}}</td>\r",
+							"                <td>{{id}}</td>\r",
+							"            </tr>\r",
+							"        {{/each}}\r",
+							"    </table>\r",
+							"`;\r",
+							"\r",
+							"// Set visualizer\r",
+							"pm.visualizer.set(template, {\r",
+							"    // Pass the response body parsed as JSON as `data`\r",
+							"    response: pm.response.json()\r",
+							"});"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "{{jobdescriptions_url}}",
+					"host": [
+						"{{jobdescriptions_url}}"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Employee",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"var jsonData = pm.response.json();\r",
+							"pm.environment.set(\"employee_id\", jsonData.id);\r",
+							"\r",
+							"pm.test(\"Username test\", function () {\r",
+							"    var jsonData = pm.response.json();\r",
+							"    pm.expect(jsonData.userName).to.eql(\"garazoli\");\r",
+							"});\r",
+							"\r",
+							"pm.test(\"First name test\", function () {\r",
+							"    var jsonData = pm.response.json();\r",
+							"    pm.expect(jsonData.firstName).to.eql(\"Zoltán\");\r",
+							"});\r",
+							"\r",
+							"pm.test(\"Middle name test\", function () {\r",
+							"    var jsonData = pm.response.json();\r",
+							"    pm.expect(jsonData.middleName).to.eql(\"\");\r",
+							"});\r",
+							"\r",
+							"pm.test(\"Email test\", function () {\r",
+							"    var jsonData = pm.response.json();\r",
+							"    pm.expect(jsonData.emailId).to.eql(\"garazoli@gmail.com\");\r",
+							"});\r",
+							"\r",
+							"pm.test(\"Day of birth test\", function () {\r",
+							"    var jsonData = pm.response.json();\r",
+							"    pm.expect(jsonData.dayOfBirth).to.eql(\"1980-10-22\");\r",
+							"});"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n    \"userName\": \"{{user_name}}\",\r\n    \"jobDescriptionId\": \"{{job_description_id}}\",\r\n    \"firstName\": \"{{first_name}}\",\r\n    \"lastName\": \"{{last_name}}\",\r\n    \"middleName\": \"{{middle_name}}\",\r\n    \"emailId\": \"{{email_id}}\",\r\n    \"dayOfBirth\": \"{{day_of_birth}}\"\r\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "{{employees_url}}",
+					"host": [
+						"{{employees_url}}"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Employee",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"pm.test(\"Mod user name test\", function () {\r",
+							"    var jsonData = pm.response.json();\r",
+							"    pm.expect(jsonData.userName).to.eql(\"garazolika\");\r",
+							"});\r",
+							"\r",
+							"pm.test(\"Mod First name test\", function () {\r",
+							"    var jsonData = pm.response.json();\r",
+							"    pm.expect(jsonData.firstName).to.eql(\"Zoltánka\");\r",
+							"});"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "PUT",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n    \"userName\": \"garazolika\",\r\n    \"jobDescriptionId\": {{job_description_id}},\r\n    \"firstName\": \"Zoltánka\",\r\n    \"lastName\": \"Garamvölgyi\",\r\n    \"middleName\": \"\",\r\n    \"emailId\": \"garazoli@gmail.com\",\r\n    \"dayOfBirth\": \"1980-10-22\"\r\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "{{employees_url}}/{{employee_id}}",
+					"host": [
+						"{{employees_url}}"
+					],
+					"path": [
+						"{{employee_id}}"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Employees",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"var template = `\r",
+							"    <table bgcolor=\"#FFFFFF\">\r",
+							"        <tr>\r",
+							"            <th>User Name</th>\r",
+							"            <th>First Name</th>\r",
+							"            <th>Middle Name</th>\r",
+							"            <th>Last Name</th>\r",
+							"            <th>Email</th>\r",
+							"            <th>Day of birth</th>\r",
+							"        </tr>\r",
+							"\r",
+							"        {{#each response}}\r",
+							"            <tr>\r",
+							"                <td>{{userName}}</td>\r",
+							"                <td>{{firstName}}</td>\r",
+							"                <td>{{middleName}}</td>\r",
+							"                <td>{{lastName}}</td>\r",
+							"                <td>{{emailId}}</td>\r",
+							"                <td>{{dayOfBirth}}</td>\r",
+							"            </tr>\r",
+							"        {{/each}}\r",
+							"    </table>\r",
+							"`;\r",
+							"\r",
+							"// Set visualizer\r",
+							"pm.visualizer.set(template, {\r",
+							"    // Pass the response body parsed as JSON as `data`\r",
+							"    response: pm.response.json()\r",
+							"});"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "{{employees_url}}",
+					"host": [
+						"{{employees_url}}"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Employee",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"pm.test(\"Delete OK\", function () {\r",
+							"    pm.response.to.have.body(\"\");\r",
+							"});"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "DELETE",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "{{employees_url}}/{{employee_id}}",
+					"host": [
+						"{{employees_url}}"
+					],
+					"path": [
+						"{{employee_id}}"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Jobdescription",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"pm.test(\"Delete OK\", function () {\r",
+							"    pm.response.to.have.body(\"\");\r",
+							"});"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "DELETE",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "{{jobdescriptions_url}}/{{job_description_id}}",
+					"host": [
+						"{{jobdescriptions_url}}"
+					],
+					"path": [
+						"{{job_description_id}}"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Employees",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"pm.test(\"Everything is clear\", function () {\r",
+							"    pm.response.to.have.body(\"[]\");\r",
+							"});"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "{{employees_url}}",
+					"host": [
+						"{{employees_url}}"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Jobdescriptions",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"pm.test(\"Everything is clear\", function () {\r",
+							"    pm.response.to.have.body(\"[]\");\r",
+							"});"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "{{jobdescriptions_url}}",
+					"host": [
+						"{{jobdescriptions_url}}"
+					]
+				}
+			},
+			"response": []
+		}
+	],
+	"auth": {
+		"type": "basic",
+		"basic": [
+			{
+				"key": "password",
+				"value": "{{employees_password}}",
+				"type": "string"
+			},
+			{
+				"key": "username",
+				"value": "{{employees_username}}",
+				"type": "string"
+			}
+		]
+	},
+	"event": [
+		{
+			"listen": "prerequest",
+			"script": {
+				"type": "text/javascript",
+				"exec": [
+					""
+				]
+			}
+		},
+		{
+			"listen": "test",
+			"script": {
+				"type": "text/javascript",
+				"exec": [
+					""
+				]
+			}
+		}
+	]
+}
