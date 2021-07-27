@@ -1,4 +1,4 @@
-name: Test-Build
+name: Test-Employees
 on:
   push:
     branches:
@@ -29,7 +29,7 @@ jobs:
     - run: docker-compose up -d
     
     - name: Sleep for 60 seconds
-      run: sleep 90s
+      run: sleep 60s
       shell: bash
       
     # Run the POSTMAN collection
