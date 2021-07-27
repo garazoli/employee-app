@@ -5,12 +5,12 @@ on:
     branches:
     - master
 
-jobs: 
+jobs:
   newman:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@master
       - uses: matt-ball/newman-action@master
         with:
-          collection: "employee collection.postman_collection.json"
+          collection: employee collection.postman_collection.json
           environment: Localhost.postman_environment.json
